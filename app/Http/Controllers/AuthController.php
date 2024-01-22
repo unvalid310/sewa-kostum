@@ -30,6 +30,7 @@ class AuthController extends Controller
             $data = User::where('email', $request->email)->first();
             $userData = [
                 'userId' => $data['id'],
+                'isLogin' => true,
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'ttl' => $data['ttl'],
@@ -43,7 +44,7 @@ class AuthController extends Controller
             if(Auth::user()->hasRole('customer')) {
                 return redirect()->intended('/');
             } else {
-                return redirect()->intended('/dashboard');
+                return redirect()->to('/dashboard');
             }
         }
 

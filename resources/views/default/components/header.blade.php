@@ -1,7 +1,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-<title>Sewa Kostume - Destinasi baru untuk menyewa kostum Anda</title>
+<title>Sewa Kostum - Destinasi baru untuk menyewa kostum Anda</title>
 <!-- Favicons -->
 <link rel="shortcut icon" href="{{ asset('default/assets/images/favicon.ico') }}">
 

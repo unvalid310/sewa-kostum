@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,11 +20,6 @@ class CartController extends Controller
     use ValidatesRequests;
     use HasRoles;
     //
-    public function __construct()
-    {
-        $this->middleware('permission:view keranjang', ['only' => ['index']]);
-        $this->middleware('permission:tambah keranjang', ['only' => ['addCart', 'addCart']]);
-    }
 
     public function index(Request $request) {
         $cartModel = new Cart();
@@ -33,7 +28,10 @@ class CartController extends Controller
         $data = $cartModel->getAll(['cart.id_user' => $idUser]);
         $paymentMethod = PaymentMethod::get();
 
-        return view('default.pages.cart')->with(['cart' => $data, 'payment_method' => $paymentMethod]);
+        if(Auth::user()->hasRole('admin'))
+            return redirect()->to('/dashboard');
+        else
+            return view('default.pages.cart')->with(['cart' => $data, 'payment_method' => $paymentMethod]);
     }
 
     public function addCart(Request $request) {
@@ -117,5 +115,27 @@ class CartController extends Controller
                 ['success' => true],
                 200
             );
+    }
+
+    public function delete(Request $request) {
+        $idCart = $request->id;
+        $delete = Cart::where('id_cart', $idCart)->delete();
+        if($delete) {
+            return response()->json(
+                [
+                    "success" => true,
+                    "message" => "Produk berhasil dihapus!"
+                ],
+                200
+            );
+        } else {
+            return response()->json(
+                [
+                    "success" => false,
+                    "message" => "Produk gagal dihapus!"
+                ],
+                200
+            );
+        }
     }
 }

@@ -94,7 +94,7 @@
             <div class="row align-items-center">
                 <div class="col-12 text-center">
                     <div class="copyright-content">
-                        <p class="mb-0">Copyright © 2021 <a href="https://hasthemes.com/">HasThemes.</a> All
+                        <p class="mb-0">Copyright © 2024 <a href="javascript:void(0)">Sewa-Kostum.</a> All
                             Rights Reserved.</p>
                     </div>
                 </div>

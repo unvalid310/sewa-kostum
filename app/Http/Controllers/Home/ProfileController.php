@@ -19,17 +19,24 @@ class ProfileController extends Controller
     use ValidatesRequests;
     use HasRoles;
     //
-    public function __construct()
-    {
-        $this->middleware('permission:view profil', ['only' => ['index']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('permission:view profil', ['only' => ['index']]);
+    // }
 
     public function index(Request $request) {
         $idUser = $request->session()->get('userId');
-        $transaction = Transaction::where('id_user', $idUser)->simplePaginate(10);
+        $transaction = Transaction::where('id_user', $idUser)->orderby('id_transaction', 'desc')->get();
+        $user = Authenticatable::where('id', $idUser)->first();
 
-        return view('default.pages.profile')->with([
-            'transaction' => $transaction,
-        ]);
+        if(Auth::user()->hasRole('admin')) {
+            return redirect()->to('/dashboard');
+        }
+        else {
+            return view('default.pages.profile')->with([
+                'transaction' => $transaction,
+                'user' => $user,
+            ]);
+        }
     }
 }

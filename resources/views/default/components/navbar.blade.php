@@ -43,8 +43,13 @@
                         <div class="header-actions">
 
                             <!-- User Account Header Action Button Start -->
-                            <a href="/my-account" class="header-action-btn d-none d-md-block"><i
-                                    class="pe-7s-user"></i></a>
+                            @if (Session::get('isLogin'))
+                                <a href="/my-account" class="header-action-btn d-none d-md-block"><i
+                                        class="pe-7s-user"></i></a>
+                            @else
+                                <a href="/auth" class="header-action-btn d-none d-md-block"><i
+                                        class="pe-7s-user"></i></a>
+                            @endif
                             <!-- User Account Header Action Button End -->
 
                             <!-- Shopping Cart Header Action Button Start -->

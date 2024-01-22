@@ -10,9 +10,19 @@ use App\Models\Transaction;
 use App\Models\DetailTransaction;
 use App\Models\PaymentMethod;
 use App\Services\Midtrans\CreateSnapTokenService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class CheckoutController extends Controller
 {
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
+    use HasRoles;
     //
     public function checkout(Request $request) {
         $transactionModel = new Transaction();
@@ -23,6 +33,7 @@ class CheckoutController extends Controller
 
         $idUser = $request->session()->get('userId');
         $data = \json_decode($request->getContent(), true);
+        $idPayment = $data['payment'];
         foreach ($data['cart'] as $key => $value) {
             # code...
             $cart = $data['cart'][$key];
@@ -31,7 +42,7 @@ class CheckoutController extends Controller
                 array_push($error, '<b>'.$product->name.'</b> stok <b>habis</b>');
             }
             $qty = $qty + $cart['qty'];
-            $total = $total + $cart['qty'] * $cart['price'];
+            $total = $total + ($cart['qty'] * $cart['price'] + 7 * 50000);
         }
 
         if($error) {
@@ -45,6 +56,7 @@ class CheckoutController extends Controller
             $transactionModel->invoice = rand();
             $transactionModel->total = $total;
             $transactionModel->qty = $qty;
+            $transactionModel->id_payment =$idPayment;
 
             $transactionModel->save();
             $idTransaction = $transactionModel->id_transaction;
@@ -100,16 +112,44 @@ class CheckoutController extends Controller
     public function payment(Request $request) {
         $idTransaction = $request->id;
         $idUser = $request->session()->get('userId');
-        $detailTransaaction = DetailTransaction::where(['id_transaction' => $idTransaction])->get();
         $transaction = Transaction::where(['id_transaction' => $idTransaction])->first();
-        $payment = PaymentMethod::where(['id_payment' => $transaction->id_payment])->first();
+        $detailTransaaction = DetailTransaction::where(['id_transaction' => $idTransaction])->get();
 
-        return view('default.pages.payment')
+        if(Auth::user()->hasRole('admin'))
+            return redirect()->to('/dashboard');
+
+        if($transaction) {
+            $payment = PaymentMethod::where(['id_payment' => $transaction->id_payment])->first();
+            if(!empty($transaction->id_card) && !empty($transaction->shipping_address) && !empty($transaction->length_rent)) {
+                return redirect()->to('/order?id='. $idTransaction);
+            } else {
+                return view('default.pages.payment')
+                ->with([
+                    'transaction' => $transaction,
+                    'cart' => $detailTransaaction,
+                    'payment' => $payment,
+                    'snap_token' => $transaction->snap_token
+                ]);
+            }
+        } else {
+            return redirect()->to('/');
+        }
+    }
+
+    public function order(Request $request) {
+        $idTransaction = $request->id;
+        $idUser = $request->session()->get('userId');
+        $detailTransaaction = DetailTransaction::where(['id_transaction' => $idTransaction])->get();
+        $transaction = Transaction::getAll(['id_transaction' => $idTransaction]);
+        foreach ($transaction as $key => $value)
+
+        if(Auth::user()->hasRole('admin'))
+            return redirect()->to('/dashboard');
+
+        return view('default.pages.order')
             ->with([
-                'transaction' => $transaction,
+                'transactions' => $transaction,
                 'cart' => $detailTransaaction,
-                'payment' => $payment,
-                'snap_token' => $transaction->snap_token
             ]);
     }
 
@@ -119,7 +159,10 @@ class CheckoutController extends Controller
         $message = 'Pesanan berhasil diproses, diharapkan segera melakukan pembayaran';
         $idTransaction = $request->id;
         $status = $request->status;
+        $length_rent = $request->length_rent;
         $shippingAddress = $request->shipping_address;
+        $va_number = $request->va_number;
+        $pdf_url = $request->pdf_url;
         $idUser = $request->session()->get('userId');
         $file = $request->file('file');
 
@@ -128,9 +171,12 @@ class CheckoutController extends Controller
         $updatePayment = [
             'status' => $status,
             'shipping_address' => $shippingAddress,
+            'va_number' => $va_number,
+            'length_rent' => $length_rent,
+            'pdf_url' => $pdf_url,
         ];
 
-        if($status == 3) {
+        if($status == 2) {
             $updatePayment['payment_date'] = date('y-m-d');
             $message = 'Pesanan berhasil dibayar';
         }

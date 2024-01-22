@@ -10,7 +10,7 @@
                     <h1 class="title">Checkout</h1>
                     <ul>
                         <li>
-                            <a href="index.html">Home </a>
+                            <a href="/">Home </a>
                         </li>
                         <li class="active"> Checkout</li>
                     </ul>
@@ -22,174 +22,206 @@
     </div>
     <!-- Breadcrumb Section End -->
 
-    <!-- Checkout Section Start -->
-    <div class="section section-margin">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Coupon Accordion Start -->
-                    <div class="coupon-accordion">
+    @if (count($transaction) > 0)
+        <!-- Checkout Section Start -->
+        <div class="section section-margin">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Coupon Accordion Start -->
+                        <div class="coupon-accordion">
 
-                        <!-- Checkout Coupon Start -->
-                        <div id="checkout_coupon" class="coupon-checkout-content">
-                            <div class="coupon-info">
-                                <form action="#">
-                                    <p class="checkout-coupon d-flex">
-                                        <input placeholder="Coupon code" type="text">
-                                        <input class="btn btn-dark btn-hover-primary rounded-0" value="Apply Coupon"
-                                            type="submit">
-                                    </p>
-                                </form>
+                            <!-- Checkout Coupon Start -->
+                            <div id="checkout_coupon" class="coupon-checkout-content">
+                                <div class="coupon-info">
+                                    <form action="#">
+                                        <p class="checkout-coupon d-flex">
+                                            <input placeholder="Coupon code" type="text">
+                                            <input class="btn btn-dark btn-hover-primary rounded-0" value="Apply Coupon"
+                                                type="submit">
+                                        </p>
+                                    </form>
+                                </div>
                             </div>
+                            <!-- Checkout Coupon End -->
+
                         </div>
-                        <!-- Checkout Coupon End -->
+                        <!-- Coupon Accordion End -->
+                    </div>
+                </div>
+                <div class="row mb-n4">
+                    <div class="col-lg-6 col-12 mb-4">
+
+                        <!-- Checkbox Form Start -->
+                        <form action="#">
+                            <div class="checkbox-form">
+
+                                <!-- Checkbox Form Title Start -->
+                                <h3 class="title">Detail Penyewaan</h3>
+                                <!-- Checkbox Form Title End -->
+
+                                <div class="row">
+
+                                    <!-- First Name Input Start -->
+                                    <div class="col-md-12 mt-3">
+                                        <div class="checkout-form-list mb-1">
+                                            <label>Upload KTP <span class="required text-danger">*</span></label>
+                                        </div>
+                                    </div>
+                                    <!-- First Name Input End -->
+
+                                    @if ($transaction->id_card)
+                                        <div class="col-md-12">
+                                            <div class="checkout-form-list mb-1">
+                                                <i>KTP sudah di upload.</i>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="col-md-12">
+                                            <div class="checkout-form-list mb-3">
+                                                <input id="file" placeholder="" type="file">
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="row">
+
+                                    <!-- First Name Input Start -->
+                                    <div class="col-md-12 mt-3">
+                                        <div class="checkout-form-list mb-1">
+                                            <label>Lama Peminjaman <span class="required text-danger">*</span></label>
+                                        </div>
+                                    </div>
+                                    <!-- First Name Input End -->
+
+                                    <div class="col-md-2">
+                                        <div class="checkout-form-list mb-3">
+                                            <input class="text-center" placeholder="" type="number" id="length_rent"
+                                                value="1">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Different Address Start -->
+                                <div class="different-address">
+
+                                    <!-- Order Notes Textarea Start -->
+                                    <div class="order-notes mb-n2">
+                                        <div class="checkout-form-list checkout-form-list-2">
+                                            <label>Alamat pengiriman <span class="required text-danger">*</span></label>
+                                            <textarea id="shipping-address" cols="30" rows="10" placeholder="Alamat pengiriman"><?php echo !empty($transaction->shipping_address) ? $transaction->shipping_address : ''; ?></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- Order Notes Textarea End -->
+
+                                </div>
+                                <!-- Different Address End -->
+                            </div>
+                        </form>
+                        <!-- Checkbox Form End -->
 
                     </div>
-                    <!-- Coupon Accordion End -->
-                </div>
-            </div>
-            <div class="row mb-n4">
-                <div class="col-lg-6 col-12 mb-4">
 
-                    <!-- Checkbox Form Start -->
-                    <form action="#">
-                        <div class="checkbox-form">
+                    <div class="col-lg-6 col-12 mb-4">
 
-                            <!-- Checkbox Form Title Start -->
-                            <h3 class="title">Detail Penyewaan</h3>
-                            <!-- Checkbox Form Title End -->
+                        <!-- Your Order Area Start -->
+                        <div class="your-order-area border">
 
-                            <div class="row">
+                            <!-- Title Start -->
+                            <h3 class="title">Pesananmu</h3>
+                            <!-- Title End -->
 
-                                <!-- First Name Input Start -->
-                                <div class="col-md-12 mt-3">
-                                    <div class="checkout-form-list mb-1">
-                                        <label>Upload KTP <span class="required text-danger">*</span></label>
-                                    </div>
-                                </div>
-                                <!-- First Name Input End -->
+                            <!-- Your Order Table Start -->
+                            <div class="your-order-table table-responsive">
+                                <table class="table mb-0">
 
-                                @if ($transaction->id_card)
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list mb-1">
-                                            <i>KTP sudah di upload.</i>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="col-md-12">
-                                        <div class="checkout-form-list mb-3">
-                                            <input id="file" placeholder="" type="file">
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
+                                    <!-- Table Head Start -->
+                                    <thead>
+                                        <tr class="cart-product-head">
+                                            <th class="cart-product-name text-start">Product</th>
+                                            <th class="cart-product-total text-end">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Table Head End -->
 
-                            <!-- Different Address Start -->
-                            <div class="different-address">
+                                    <!-- Table Body Start -->
+                                    <tbody>
+                                        <?php $subtotal = 0; ?>
+                                        @foreach ($cart as $product)
+                                            <?php $subtotal = $subtotal + $product->price * $product->qty; ?>
+                                            <tr class="cart_item">
+                                                <td class="cart-product-name text-start ps-0">
+                                                    <?php echo $product->name; ?> <?php $product->variant ? ' ' . $product->size . '/' . $product->variant : $product->size; ?>
+                                                    <strong class="product-quantity"> × {{ $product->qty }}</strong>
+                                                </td>
+                                                <td class="cart-product-total text-end pe-0"><span
+                                                        class="amount">{{ rupiah($product->price) }}</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                    <!-- Table Body End -->
 
-                                <!-- Order Notes Textarea Start -->
-                                <div class="order-notes mb-n2">
-                                    <div class="checkout-form-list checkout-form-list-2">
-                                        <label>Alamat pengiriman <span class="required text-danger">*</span></label>
-                                        <textarea id="shipping-address" cols="30" rows="10" placeholder="Alamat pengiriman"><?php echo !empty($transaction->shipping_address) ? $transaction->shipping_address : ''; ?></textarea>
-                                    </div>
-                                </div>
-                                <!-- Order Notes Textarea End -->
-
-                            </div>
-                            <!-- Different Address End -->
-                        </div>
-                    </form>
-                    <!-- Checkbox Form End -->
-
-                </div>
-
-                <div class="col-lg-6 col-12 mb-4">
-
-                    <!-- Your Order Area Start -->
-                    <div class="your-order-area border">
-
-                        <!-- Title Start -->
-                        <h3 class="title">Pesananmu</h3>
-                        <!-- Title End -->
-
-                        <!-- Your Order Table Start -->
-                        <div class="your-order-table table-responsive">
-                            <table class="table mb-0">
-
-                                <!-- Table Head Start -->
-                                <thead>
-                                    <tr class="cart-product-head">
-                                        <th class="cart-product-name text-start">Product</th>
-                                        <th class="cart-product-total text-end">Total</th>
-                                    </tr>
-                                </thead>
-                                <!-- Table Head End -->
-
-                                <!-- Table Body Start -->
-                                <tbody>
-                                    <?php $subtotal = 0; ?>
-                                    @foreach ($cart as $product)
-                                        <?php $subtotal = $subtotal + $product->price * $product->qty; ?>
-                                        <tr class="cart_item">
-                                            <td class="cart-product-name text-start ps-0">
-                                                <?php echo $product->name; ?> <?php $product->variant ? ' ' . $product->size . '/' . $product->variant : $product->size; ?>
-                                                <strong class="product-quantity"> × {{ $product->qty }}</strong>
-                                            </td>
-                                            <td class="cart-product-total text-end pe-0"><span
-                                                    class="amount">{{ rupiah($product->price) }}</span>
+                                    <!-- Table Footer Start -->
+                                    <tfoot>
+                                        <tr class="cart-subtotal">
+                                            <th class="text-start ps-0">Subtotal</th>
+                                            <td class="text-end pe-0"><span class="amount">{{ rupiah($subtotal) }}</span>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                                <!-- Table Body End -->
+                                        <tr class="cart-subtotal">
+                                            <th class="text-start ps-0">Denda</th>
+                                            <td class="text-end pe-0"><span class="amount"><?php echo count($cart) > 0 ? rupiah(50000 * 7) : rupiah(0); ?></span></td>
+                                        </tr>
+                                        <tr class="order-total">
+                                            <th class="text-start ps-0">Total</th>
+                                            <td class="text-end pe-0">
+                                                <strong>
+                                                    <span class="amount"><?php echo count($cart) > 0 ? rupiah($subtotal + 50000 * 7) : rupiah(0); ?></span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                    <!-- Table Footer End -->
 
-                                <!-- Table Footer Start -->
-                                <tfoot>
-                                    <tr class="cart-subtotal">
-                                        <th class="text-start ps-0">Subtotal</th>
-                                        <td class="text-end pe-0"><span class="amount">{{ rupiah($subtotal) }}</span></td>
-                                    </tr>
-                                    <tr class="cart-subtotal">
-                                        <th class="text-start ps-0">Denda</th>
-                                        <td class="text-end pe-0"><span class="amount"><?php echo count($cart) > 0 ? rupiah(50000 * 7) : rupiah(0); ?></span></td>
-                                    </tr>
-                                    <tr class="order-total">
-                                        <th class="text-start ps-0">Total</th>
-                                        <td class="text-end pe-0">
-                                            <strong>
-                                                <span class="amount"><?php echo count($cart) > 0 ? rupiah($subtotal + 50000 * 7) : rupiah(0); ?></span>
-                                            </strong>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                                <!-- Table Footer End -->
-
-                            </table>
-                            <div class="mb-1">
-                                <small>
-                                    <text class="text-danger">*</text> <i>Denda akan apabila pengembalian tepat
-                                        waktu</i>
-                                </small>
+                                </table>
+                                <div class="mb-1">
+                                    <small>
+                                        <text class="text-danger">*</text> <i>Denda akan apabila pengembalian tepat
+                                            waktu</i>
+                                    </small>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Your Order Table End -->
+                            <!-- Your Order Table End -->
 
-                        <!-- Payment Accordion Order Button Start -->
-                        <div class="payment-accordion-order-button">
-                            <div class="order-button-payment">
-                                <button id="pay-now" class="btn btn-dark btn-hover-primary rounded-0 w-100">Bayar
-                                    Sekarang</button>
+                            <!-- Payment Accordion Order Button Start -->
+                            <div class="payment-accordion-order-button">
+                                <div class="order-button-payment">
+                                    <button id="pay-now" class="btn btn-dark btn-hover-primary rounded-0 w-100">Bayar
+                                        Sekarang</button>
+                                </div>
                             </div>
+                            <!-- Payment Accordion Order Button End -->
                         </div>
-                        <!-- Payment Accordion Order Button End -->
+                        <!-- Your Order Area End -->
                     </div>
-                    <!-- Your Order Area End -->
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Checkout Section End -->
+        <!-- Checkout Section End -->
+    @else
+        <div class="section section-margin">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p><i>--------------- Tidak ada pesanan ---------------</i></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
 @endsection
 @push('script')
     <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
@@ -215,18 +247,17 @@
                 @endif {
 
                     snap.pay('{{ $snap_token }}', {
+                        selectedPaymentType: '{{ $transaction->id_payment }}',
+                        language: 'id',
                         // Optional
                         onSuccess: function(result) {
-                            /* You may add your own js here, this is just example */
-                            // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                             console.log('on success ' + result.status_code);
                             var dataimg = new FormData();
                             dataimg.append('file', $("#file")[0].files[0]);
                             dataimg.append('id', {{ $transaction->id_transaction }});
-                            dataimg.append('status', 3);
+                            dataimg.append('status', 2);
+                            dataimg.append('length_rent', $('#length_rent').val());
                             dataimg.append('shipping_address', $('#shipping-address').val());
-
-                            console.log(baseUrl);
 
                             $.ajax({
                                 url: baseUrl + "/addpayment",
@@ -248,20 +279,21 @@
                                 }
                             });
 
+                            console.log(result);
                         },
                         // Optional
                         onPending: function(result) {
-                            console.log('on pending ' + result.status_code);
+                            console.log('on pending ' + result);
                             var dataimg = new FormData();
                             @if (empty($transaction->id_card))
                                 dataimg.append('file', $("#file")[0].files[0]);
                             @endif
 
                             dataimg.append('id', {{ $transaction->id_transaction }});
-                            dataimg.append('status', 2);
+                            dataimg.append('status', 1);
+                            dataimg.append('length_rent', $('#length_rent').val());
                             dataimg.append('shipping_address', $('#shipping-address').val());
-
-                            console.log(baseUrl);
+                            dataimg.append('pdf_url', result.pdf_url);
 
                             $.ajax({
                                 url: baseUrl + "/addpayment",
@@ -283,20 +315,21 @@
                                     }, 1000);
                                 }
                             });
-
                         },
                         // Optional
                         onError: function(result) {
-                            /* You may add your own js here, this is just example */
-                            // document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
                             console.log('on error ' + result.status_code);
                             console.log(result)
-                        }
+                        },
+                        onClose: function(result) {
+                            console.log('on error ' + result.status_code);
+                            console.log(result)
+                        },
                     });
                 } else {
                     swal({
                         title: "Pesanan Gagal!",
-                        text: 'Lengkapi foto KTP dan alamat pengiriman',
+                        text: 'Lengkapi foto KTP, Lama peminjaman dan alamat pengiriman',
                         type: "error",
                     });
                 }

@@ -11,7 +11,7 @@ class PaymentMethod extends Model
 
     protected $table = 'payment_method';
     protected $primaryKey = 'id_payment';
-    protected $keyType = 'int';
+    protected $keyType = 'string';
     protected $fillable = [
         'label',
         'bank',

@@ -11,7 +11,7 @@
                         <h1 class="title">Product</h1>
                         <ul>
                             <li>
-                                <a href="index.html">Beranda </a>
+                                <a href="/">Beranda </a>
                             </li>
                             <li class="active"> {{ $product->name }}</li>
                         </ul>

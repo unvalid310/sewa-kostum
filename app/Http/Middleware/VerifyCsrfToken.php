@@ -17,5 +17,10 @@ class VerifyCsrfToken extends Middleware
         '/update-cart',
         '/checkout',
         '/addpayment',
+        '/delete-cart',
+        'payments/midtrans-notification',
+        '/admin-produk/delete',
+        '/pengembalian/delete'
+
     ];
 }

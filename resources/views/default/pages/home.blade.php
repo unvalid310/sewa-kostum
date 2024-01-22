@@ -167,13 +167,11 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up"
                                                         data-aos-delay="300">
                                                         <div class="thumb">
-                                                            <a href="single-product.html" class="image">
-                                                                <img class="first-image"
-                                                                    src="{{ asset('default/assets/uploads/product-1.jpg') }}"
+                                                            <a href="/product/{{ $product->id_products }}" class="image">
+                                                                <img class="first-image" src="{{ asset($product->image) }}"
                                                                     alt="Product" />
                                                                 <img class="second-image"
-                                                                    src="{{ asset('default/assets/uploads/product-1.jpg') }}"
-                                                                    alt="Product" />
+                                                                    src="{{ asset($product->image) }}" alt="Product" />
                                                             </a>
                                                             @if ($product->stock == 0)
                                                                 <span class="badges">
@@ -196,7 +194,7 @@
                                                         </div>
                                                         <div class="content">
                                                             <h5 class="title"><a
-                                                                    href="single-product.html">{{ $product->name }}</a>
+                                                                    href="/product/{{ $product->id_products }}">{{ $product->name }}</a>
                                                             </h5>
                                                             <span class="ratings">
                                                                 <span class="rating-wrap">
@@ -248,13 +246,12 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up"
                                                         data-aos-delay="300">
                                                         <div class="thumb">
-                                                            <a href="single-product.html" class="image">
+                                                            <a href="/product/{{ $product->id_products }}"
+                                                                class="image">
                                                                 <img class="first-image"
-                                                                    src="{{ asset('default/assets/uploads/product-1.jpg') }}"
-                                                                    alt="Product" />
+                                                                    src="{{ asset($product->image) }}" alt="Product" />
                                                                 <img class="second-image"
-                                                                    src="{{ asset('default/assets/uploads/product-1.jpg') }}"
-                                                                    alt="Product" />
+                                                                    src="{{ asset($product->image) }}" alt="Product" />
                                                             </a>
                                                             @if ($product->stock == 0)
                                                                 <span class="badges">
@@ -277,7 +274,7 @@
                                                         </div>
                                                         <div class="content">
                                                             <h5 class="title"><a
-                                                                    href="single-product.html">{{ $product->name }}</a>
+                                                                    href="/product/{{ $product->id_products }}">{{ $product->name }}</a>
                                                             </h5>
                                                             <span class="ratings">
                                                                 <span class="rating-wrap">
@@ -329,13 +326,12 @@
                                                     <div class="product product-border-left mb-10" data-aos="fade-up"
                                                         data-aos-delay="300">
                                                         <div class="thumb">
-                                                            <a href="single-product.html" class="image">
+                                                            <a href="/product/{{ $product->id_products }}"
+                                                                class="image">
                                                                 <img class="first-image"
-                                                                    src="{{ asset('default/assets/uploads/product-1.jpg') }}"
-                                                                    alt="Product" />
+                                                                    src="{{ asset($product->image) }}" alt="Product" />
                                                                 <img class="second-image"
-                                                                    src="{{ asset('default/assets/uploads/product-1.jpg') }}"
-                                                                    alt="Product" />
+                                                                    src="{{ asset($product->image) }}" alt="Product" />
                                                             </a>
                                                             @if ($product->stock == 0)
                                                                 <span class="badges">
@@ -358,7 +354,7 @@
                                                         </div>
                                                         <div class="content">
                                                             <h5 class="title"><a
-                                                                    href="single-product.html">{{ $product->name }}</a>
+                                                                    href="/product/{{ $product->id_products }}">{{ $product->name }}</a>
                                                             </h5>
                                                             <span class="ratings">
                                                                 <span class="rating-wrap">
@@ -429,7 +425,7 @@
                                         @foreach ($offer[$i] as $product)
                                             <div class="single-product-list product-hover mb-6">
                                                 <div class="thumb">
-                                                    <a href="single-product.html" class="image">
+                                                    <a href="/product/{{ $product->id_products }}" class="image">
                                                         <img class="first-image" src="{{ asset($product->image) }}"
                                                             alt="Product" width="100px" height="100px" />
                                                         <img class="second-image" src="{{ asset($product->image) }}"
@@ -438,7 +434,8 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="title"><a
-                                                            href="single-product.html">{{ $product->name }}</a></h5>
+                                                            href="/product/{{ $product->id_products }}">{{ $product->name }}</a>
+                                                    </h5>
                                                     <span class="price">
                                                         <span class="new">{{ rupiah($product->price) }}</span>
                                                         @if ($product->old_price)
@@ -491,7 +488,7 @@
                                         @foreach ($arrival[$i] as $product)
                                             <div class="single-product-list product-hover mb-6">
                                                 <div class="thumb">
-                                                    <a href="single-product.html" class="image">
+                                                    <a href="/product/{{ $product->id_products }}" class="image">
                                                         <img class="first-image" src="{{ asset($product->image) }}"
                                                             alt="Product" width="100px" height="100px" />
                                                         <img class="second-image" src="{{ asset($product->image) }}"
@@ -500,7 +497,8 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="title"><a
-                                                            href="single-product.html">{{ $product->name }}</a></h5>
+                                                            href="/product/{{ $product->id_products }}">{{ $product->name }}</a>
+                                                    </h5>
                                                     <span class="price">
                                                         <span class="new">{{ rupiah($product->price) }}</span>
                                                         @if ($product->old_price)
@@ -551,7 +549,7 @@
                                         @foreach ($popular[$i] as $product)
                                             <div class="single-product-list product-hover mb-6">
                                                 <div class="thumb">
-                                                    <a href="single-product.html" class="image">
+                                                    <a href="/product/{{ $product->id_products }}" class="image">
                                                         <img class="first-image" src="{{ asset($product->image) }}"
                                                             alt="Product" width="100px" height="100px" />
                                                         <img class="second-image" src="{{ asset($product->image) }}"
@@ -560,7 +558,8 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="title"><a
-                                                            href="single-product.html">{{ $product->name }}</a></h5>
+                                                            href="/product/{{ $product->id_products }}">{{ $product->name }}</a>
+                                                    </h5>
                                                     <span class="price">
                                                         <span class="new">{{ rupiah($product->price) }}</span>
                                                         @if ($product->old_price)

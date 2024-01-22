@@ -11,7 +11,7 @@
  Target Server Version : 110202 (11.2.2-MariaDB-log)
  File Encoding         : 65001
 
- Date: 13/01/2024 20:45:29
+ Date: 22/01/2024 09:48:59
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `cart` (
   KEY `user_cart` (`id_user`),
   CONSTRAINT `cart_product` FOREIGN KEY (`id_products`) REFERENCES `products` (`id_products`),
   CONSTRAINT `user_cart` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of cart
@@ -81,13 +81,6 @@ CREATE TABLE `detail_transaction` (
 -- Records of detail_transaction
 -- ----------------------------
 BEGIN;
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (1, 17, 'sem duis aliquam convallis nunc', '17', 'S', 1, 184902);
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (1, 15, 'lorem quis tortor id nulla ultrices', '15', 'S', 2, 284209);
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (1, 14, 'id massa id nisl venenatis lacinia aenean', '14', 'XL', 3, 113126);
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (1, 17, 'sem duis aliquam convallis nunc', '17', 'M', 1, 184902);
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (2, 20, 'aenean lectus pellentesque eget nunc donec', '20', 'S', 2, 556243);
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (3, 20, 'aenean lectus pellentesque eget nunc donec', '20', 'S', 1, 556243);
-INSERT INTO `detail_transaction` (`id_transaction`, `id_products`, `name`, `variant`, `size`, `qty`, `price`) VALUES (4, 6, 'hac habitasse platea dictumst etiam faucibus', '6', 'S', 1, 103508);
 COMMIT;
 
 -- ----------------------------
@@ -208,18 +201,21 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `payment_method`;
 CREATE TABLE `payment_method` (
-  `id_payment` int(11) NOT NULL AUTO_INCREMENT,
+  `id_payment` varchar(255) NOT NULL,
   `label` varchar(255) DEFAULT NULL,
   `bank` varchar(255) DEFAULT NULL,
   `va_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_payment`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of payment_method
 -- ----------------------------
 BEGIN;
-INSERT INTO `payment_method` (`id_payment`, `label`, `bank`, `va_number`) VALUES (1, 'BRIVA', 'bri', '70888345289878865');
+INSERT INTO `payment_method` (`id_payment`, `label`, `bank`, `va_number`) VALUES ('bca_va', 'BCA', NULL, NULL);
+INSERT INTO `payment_method` (`id_payment`, `label`, `bank`, `va_number`) VALUES ('bni_va', 'BNI', NULL, NULL);
+INSERT INTO `payment_method` (`id_payment`, `label`, `bank`, `va_number`) VALUES ('bri_va', 'BRI', 'bri', '70888345289878865');
+INSERT INTO `payment_method` (`id_payment`, `label`, `bank`, `va_number`) VALUES ('permata_va', 'PERMATA', NULL, NULL);
 COMMIT;
 
 -- ----------------------------
@@ -310,7 +306,7 @@ CREATE TABLE `products` (
   PRIMARY KEY (`id_products`),
   KEY `product_categories` (`id_categories`),
   CONSTRAINT `product_categories` FOREIGN KEY (`id_categories`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of products
@@ -321,21 +317,44 @@ INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discou
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (3, 'faucibus orci luctus et ultrices posuere', 3, 10, 10, 301700, 311700, 'Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (4, 'quam pharetra magna ac consequat metus', 2, 10, 0, 248994, 0, 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (5, 'ante vestibulum ante ipsum primis in', 2, 10, 0, 158727, 0, 'Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (6, 'hac habitasse platea dictumst etiam faucibus', 2, 9, 0, 103508, 0, 'Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (6, 'hac habitasse platea dictumst etiam faucibus', 2, 10, 0, 103508, 0, 'Nunc purus. Phasellus in felis. Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (7, 'diam id ornare imperdiet sapien urna pretium', 2, 10, 0, 300094, 0, 'In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (8, 'dui vel sem sed sagittis nam congue', 3, 10, 10, 350936, 360936, 'Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (9, 'eget semper rutrum nulla nunc', 1, 10, 0, 110151, 0, 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (10, 'ultricies eu nibh quisque id justo', 2, 10, 0, 183731, 0, 'Morbi vel lectus in quam fringilla rhoncus.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (11, 'platea dictumst aliquam augue quam', 3, 10, 10, 400270, 410270, 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (12, 'blandit nam nulla integer pede justo lacinia', 1, 10, 0, 249679, 0, 'In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (9, 'eget semper rutrum nulla nunc', 1, 9, 0, 110151, 0, 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (10, 'ultricies eu nibh quisque id justo', 2, 9, 0, 183731, 0, 'Morbi vel lectus in quam fringilla rhoncus.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (11, 'platea dictumst aliquam augue quam', 3, 9, 10, 400270, 410270, 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis. Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (12, 'blandit nam nulla integer pede justo lacinia', 1, 9, 0, 249679, 0, 'In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (13, 'interdum mauris ullamcorper purus sit amet nulla', 1, 10, 0, 482150, 0, 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (14, 'id massa id nisl venenatis lacinia aenean', 3, 4, 10, 113126, 123126, 'Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (15, 'lorem quis tortor id nulla ultrices', 3, 6, 10, 284209, 294209, 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (14, 'id massa id nisl venenatis lacinia aenean', 3, 10, 10, 113126, 123126, 'Donec semper sapien a libero. Nam dui. Proin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius. Integer ac leo.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (15, 'lorem quis tortor id nulla ultrices', 3, 8, 10, 284209, 294209, 'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (16, 'vestibulum ante ipsum primis in faucibus', 3, 10, 10, 499107, 509107, 'Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (17, 'sem duis aliquam convallis nunc', 2, 6, 0, 184902, 0, 'Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (17, 'sem duis aliquam convallis nunc', 2, 10, 0, 184902, 0, 'Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (18, 'orci eget orci vehicula condimentum', 2, 10, 0, 413124, 0, 'Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque. Duis bibendum. Morbi non quam nec dui luctus rutrum.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
 INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (19, 'sed vestibulum sit amet cursus id', 2, 10, 0, 476263, 0, 'In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus. Nulla ut erat id mauris vulputate elementum. Nullam varius.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
-INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (20, 'aenean lectus pellentesque eget nunc donec', 3, 8, 10, 556243, 566243, 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor.', 'Putih, Biru, Cokelat', 'S,M,L,XL,XXL,XXXL', 'default/assets/uploads/product-1.jpg', 'publish');
+INSERT INTO `products` (`id_products`, `name`, `id_categories`, `stock`, `discount`, `price`, `old_price`, `description`, `variant`, `size`, `image`, `status`) VALUES (20, 'aenean lectus pellentesque eget nunc donec', 3, 10, 10, 556243, 566243, 'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor.', 'Putih,kuning', 'S,M,L,XL', 'default/assets/uploads/product-1.jpg', 'publish');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for return_transaction
+-- ----------------------------
+DROP TABLE IF EXISTS `return_transaction`;
+CREATE TABLE `return_transaction` (
+  `id_return` int(11) NOT NULL AUTO_INCREMENT,
+  `id_transaction` int(11) DEFAULT NULL,
+  `return_invoice` int(11) DEFAULT NULL,
+  `return_qty` int(11) DEFAULT NULL,
+  `return_date` datetime DEFAULT NULL,
+  `late` int(11) DEFAULT NULL,
+  `late_fee` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_return`),
+  KEY `return_of_transaction` (`id_transaction`),
+  CONSTRAINT `return_of_transaction` FOREIGN KEY (`id_transaction`) REFERENCES `transaction` (`id_transaction`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- ----------------------------
+-- Records of return_transaction
+-- ----------------------------
+BEGIN;
 COMMIT;
 
 -- ----------------------------
@@ -415,25 +434,25 @@ CREATE TABLE `transaction` (
   `total` int(255) NOT NULL,
   `shipping_address` text DEFAULT NULL,
   `id_card` text DEFAULT NULL,
-  `id_payment` int(11) DEFAULT NULL,
+  `id_payment` varchar(255) DEFAULT NULL,
+  `va_number` int(11) DEFAULT NULL,
+  `pdf_url` text DEFAULT NULL,
   `snap_token` text DEFAULT NULL,
-  `status` enum('1','2','3') DEFAULT '1',
+  `status` enum('1','2','3','4') DEFAULT '1',
   `payment_date` datetime DEFAULT NULL,
+  `length_rent` int(11) DEFAULT NULL,
+  `return_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id_transaction`) USING BTREE,
-  KEY `payment_method` (`id_payment`),
   KEY `user_payment` (`id_user`),
+  KEY `payment_method` (`id_payment`),
   CONSTRAINT `payment_method` FOREIGN KEY (`id_payment`) REFERENCES `payment_method` (`id_payment`),
   CONSTRAINT `user_payment` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- ----------------------------
 -- Records of transaction
 -- ----------------------------
 BEGIN;
-INSERT INTO `transaction` (`id_transaction`, `id_user`, `invoice`, `order_date`, `qty`, `total`, `shipping_address`, `id_card`, `id_payment`, `snap_token`, `status`, `payment_date`) VALUES (1, 1, 1614606228, '2024-01-13 15:22:37', 7, 1277600, 'jjak', 'default/assets/uploads/1705134157_.jpg', NULL, 'd5e3d129-c0b5-483b-9e1f-55802fc1c878', '2', NULL);
-INSERT INTO `transaction` (`id_transaction`, `id_user`, `invoice`, `order_date`, `qty`, `total`, `shipping_address`, `id_card`, `id_payment`, `snap_token`, `status`, `payment_date`) VALUES (2, 1, 659330041, '2024-01-13 16:44:02', 2, 1112486, 'jlan jlan', 'default/assets/uploads/1705139042_.png', NULL, 'dab43e90-0545-4b71-937e-727d5cb82cdd', '2', NULL);
-INSERT INTO `transaction` (`id_transaction`, `id_user`, `invoice`, `order_date`, `qty`, `total`, `shipping_address`, `id_card`, `id_payment`, `snap_token`, `status`, `payment_date`) VALUES (3, 1, 1204017710, '2024-01-13 16:14:22', 1, 556243, NULL, NULL, NULL, 'f2a4d958-8bc1-435a-a0e7-e66d377723fd', '1', NULL);
-INSERT INTO `transaction` (`id_transaction`, `id_user`, `invoice`, `order_date`, `qty`, `total`, `shipping_address`, `id_card`, `id_payment`, `snap_token`, `status`, `payment_date`) VALUES (4, 1, 331252274, '2024-01-13 19:59:26', 1, 103508, 'Jalan', 'default/assets/uploads/1705150766_.jpg', NULL, '163fd047-40f6-491f-a9f6-7030c72085c9', '2', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -459,9 +478,9 @@ CREATE TABLE `users` (
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` (`id`, `name`, `ttl`, `email`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (1, 'Jhon Doe', '1996-02-01', 'jhondoe@gmail.com', NULL, '2024-01-01 15:18:06', '$2y$10$EYH3NEZZhdFrgRmIPCNVueYXOk1XH.dx1N8nLCbxAPUuQrF2UqbeS', 'AkOMjCEoNLYqiuS7awsYXr8QoHib54ffKC9Ix7b59RurRW8pGNPeOWaqtmA2', '2024-01-01 15:18:06', '2024-01-01 15:18:06');
-INSERT INTO `users` (`id`, `name`, `ttl`, `email`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (2, 'Admin', NULL, 'admin@gmail.com', NULL, '2024-01-01 15:18:06', '$2y$10$Is8cIAv.f7hjFRZRUBMlleFfwjzUjQlSktC0OQiRtzfMP5UwwIHu6', 'mECe4tlGVbi81fRbBnM5qnOHEuAipKTQ1A7JNLDgSozVE6uO8WmlkbnwGttk', '2024-01-01 15:18:06', '2024-01-01 15:18:06');
-INSERT INTO `users` (`id`, `name`, `ttl`, `email`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (27, 'Tya Agustin', NULL, 'agustintya23@gmail.com', '085769213985', '2024-01-13 13:26:20', '$2y$10$W.5LuvLAfiKsFjU9kI6I.OnWCtVQQzuzN3K28DTzyiqRXnBxkZn86', '07Rz9dIQFj', '2024-01-13 13:26:20', '2024-01-13 13:26:20');
+INSERT INTO `users` (`id`, `name`, `ttl`, `email`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (1, 'Jhon Doe', '1996-02-01', 'jhondoe@gmail.com', NULL, '2024-01-01 15:18:06', '$2y$10$EYH3NEZZhdFrgRmIPCNVueYXOk1XH.dx1N8nLCbxAPUuQrF2UqbeS', 'JQrJoWn5tMJcVki2GqhEm5Lc9lYATzhSWUC2U4MxDZIQfofjfolNvjvUkoXz', '2024-01-01 15:18:06', '2024-01-01 15:18:06');
+INSERT INTO `users` (`id`, `name`, `ttl`, `email`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (2, 'Admin', NULL, 'admin@gmail.com', NULL, '2024-01-01 15:18:06', '$2y$10$Is8cIAv.f7hjFRZRUBMlleFfwjzUjQlSktC0OQiRtzfMP5UwwIHu6', 'xDGd7cU7qrrlmTl24eMGGADSY8wnNHzz3Wn5RZLoelxe5h7GHZu3bM7f79E5', '2024-01-01 15:18:06', '2024-01-01 15:18:06');
+INSERT INTO `users` (`id`, `name`, `ttl`, `email`, `no_hp`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES (27, 'Tya Agustin', NULL, 'agustintya23@gmail.com', '085769213985', '2024-01-13 13:26:20', '$2y$10$W.5LuvLAfiKsFjU9kI6I.OnWCtVQQzuzN3K28DTzyiqRXnBxkZn86', 'SwOhGt3NMsxcmDxkMM1TNUeJgrt3hFbCCURB3VVOTVg0mLUMusStzb2BATBF', '2024-01-13 13:26:20', '2024-01-13 13:26:20');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

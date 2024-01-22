@@ -555,8 +555,8 @@
                 newVal = 1;
             }
         }
-        if ($button.closest('td').find('td[data-qty]')) {
-            $button.closest('.pro-quantity').attr('data-qty',newVal);
+        if ($button.closest("td").find("td[data-qty]")) {
+            $button.closest(".pro-quantity").attr("data-qty", newVal);
         }
         $button.parent().find("input").val(newVal);
     });
@@ -729,7 +729,7 @@
         });
     });
 
-    $('#exampleModalCenter').on('shown.bs.modal', function () {
+    $("#exampleModalCenter").on("shown.bs.modal", function () {
         // will only come inside after the modal is shown
         $(".cart-plus-minus").append(
             '<div class="dec qtybutton"><i class="fa fa-minus"></i></div><div class="inc qtybutton"><i class="fa fa-plus"></i></div>'
@@ -748,57 +748,65 @@
                     newVal = 1;
                 }
             }
-            if ($button.closest('td').find('td[data-qty]')) {
-                $button.closest('.pro-quantity').attr('data-qty',newVal);
+            if ($button.closest("td").find("td[data-qty]")) {
+                $button.closest(".pro-quantity").attr("data-qty", newVal);
             }
             $button.parent().find("input").val(newVal);
         });
 
-        $('.product-size a').on('click', function() {
+        $(".product-size a").on("click", function () {
             console.log($(this).text());
-            $(this).closest('.product-size').find('a').removeClass('active');
-            $(this).addClass('active');
-        })
+            $(this).closest(".product-size").find("a").removeClass("active");
+            $(this).addClass("active");
+        });
 
-        $('.product-variant a').on('click', function() {
+        $(".product-variant a").on("click", function () {
             console.log($(this).text());
-            $(this).closest('.product-variant').find('a').removeClass('active');
-            $(this).addClass('active');
-        })
+            $(this).closest(".product-variant").find("a").removeClass("active");
+            $(this).addClass("active");
+        });
 
         $("button#add-to-cart").on("click", function () {
             var idProduct = $(this).data("id"),
-                size = $('.product-size a.active').text(),
-                variant = $('.product-variant a.active').text(),
-                qty = $('input.cart-plus-minus-box').val();
+                size = $(".product-size a.active").text(),
+                variant = $(".product-variant a.active").text(),
+                qty = $("input.cart-plus-minus-box").val();
             console.log(idProduct);
 
-            var data = { 'idProducts': idProduct, 'variant': variant, 'size': size, 'qty': qty };
+            var data = {
+                idProducts: idProduct,
+                variant: variant,
+                size: size,
+                qty: qty,
+            };
             console.log(data);
 
             var request = $.ajax({
-                url: baseUrl+"/add-cart",
+                url: baseUrl + "/add-cart",
                 type: "POST",
-                data: { 'idProducts': idProduct, 'variant': variant, 'size': size, 'qty': qty },
+                data: {
+                    idProducts: idProduct,
+                    variant: variant,
+                    size: size,
+                    qty: qty,
+                },
             });
 
-            request.success(function(response) {
+            request.success(function (response) {
                 if (response.success) {
                     var data = response.data;
-                    $('#total-cart').text(data.cart_count)
+                    $("#total-cart").text(data.cart_count);
                     swal("Success!", response.message, "success");
                 } else {
                     swal("Failed!", response.message, "error");
                 }
             });
 
-            request.error(function(httpObj, textStatus) {
+            request.error(function (httpObj, textStatus) {
                 console.log(httpObj.status);
-                if(httpObj.status==401)
-                    location.href = baseUrl+"/auth";
+                if (httpObj.status == 401) location.href = baseUrl + "/auth";
             });
         });
-
     });
 
     /*-------------------------
@@ -806,105 +814,166 @@
     ---------------------------*/
     $("button#add-to-cart").on("click", function () {
         var idProduct = $(this).data("id"),
-            size = $('.product-size a.active').text(),
-            variant = $('.product-variant a.active').text(),
-            qty = $('input.cart-plus-minus-box').val();
+            size = $(".product-size a.active").text(),
+            variant = $(".product-variant a.active").text(),
+            qty = $("input.cart-plus-minus-box").val();
         console.log(idProduct);
 
         var request = $.ajax({
-            url: baseUrl+"/add-cart",
+            url: baseUrl + "/add-cart",
             type: "POST",
-            data: { 'idProducts': idProduct, 'variant': variant, 'size': size, 'qty': qty },
+            data: {
+                idProducts: idProduct,
+                variant: variant,
+                size: size,
+                qty: qty,
+            },
         });
 
-        request.success(function(response) {
+        request.success(function (response) {
             if (response.success) {
                 var data = response.data;
-                $('#total-cart').text(data.cart_count)
+                $("#total-cart").text(data.cart_count);
                 swal("Success!", response.message, "success");
             } else {
                 swal("Failed!", response.message, "error");
             }
         });
 
-        request.error(function(httpObj, textStatus) {
+        request.error(function (httpObj, textStatus) {
             console.log(httpObj.status);
-            if(httpObj.status==401)
-                location.href = baseUrl+"/auth";
+            if (httpObj.status == 401) location.href = baseUrl + "/auth";
         });
     });
 
-    $("#update-cart").on('click', function (e) {
+    $("#update-cart").on("click", function (e) {
         // e.preventDefault();
         var ret = [];
         $("#cart-table tbody tr#data").map(function (index, elem) {
             // console.log( $('td:eq(3)', this).attr('data-qty') );
-            ret.push({'id_cart': $('td:eq(0)', this).attr('data-id'), 'qty': $('td:eq(3)', this).attr('data-qty')});
+            ret.push({
+                id_cart: $("td:eq(0)", this).attr("data-id"),
+                qty: $("td:eq(3)", this).attr("data-qty"),
+            });
             // return ret;
         });
         console.log(ret);
 
-         $.ajax({
-            url: baseUrl+"/update-cart",
+        $.ajax({
+            url: baseUrl + "/update-cart",
             type: "POST",
-            dataType:"json",
+            dataType: "json",
             processData: false,
             data: JSON.stringify(ret),
-            success: function(response) {
+            success: function (response) {
                 showPreload();
 
-                if(response.success) {
-                    location.href = window.location.href
+                if (response.success) {
+                    location.href = window.location.href;
                 }
-            }
+            },
         });
     });
 
-    $("#checkout").on('click', function() {
+    $("#checkout").on("click", function () {
         var ret = [],
-            paymentMethod = $('#payment').val();
+            paymentMethod = $("#payment").val();
 
         $("#cart-table tbody tr#data").map(function (index, elem) {
             ret.push({
-                'id_products': $('td:eq(1)', this).attr('data-product'),
-                'price': $('td:eq(2)', this).attr('data-price'),
-                'qty': $('td:eq(3)', this).attr('data-qty'),
-                'size': $('td:eq(1)', this).attr('data-size'),
-                'variant': $('td:eq(1)', this).attr('data-variant'),
+                id_products: $("td:eq(1)", this).attr("data-product"),
+                price: $("td:eq(2)", this).attr("data-price"),
+                qty: $("td:eq(3)", this).attr("data-qty"),
+                size: $("td:eq(1)", this).attr("data-size"),
+                variant: $("td:eq(1)", this).attr("data-variant"),
             });
         });
 
         var data = {
-            "cart": ret,
-            'payment': null
+            cart: ret,
+            payment: $("#payment-method").val(),
         };
 
         console.log(data);
+        console.log($("#payment-method").val());
 
+        if ($("#payment-method").val() != "") {
+            $.ajax({
+                url: baseUrl + "/checkout",
+                type: "POST",
+                dataType: "json",
+                accept: "text/html",
+                processData: false,
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response);
+                    showPreload();
+                    if (response.success) {
+                        // hidePreload();
+                        console.log(response.data);
+                        location.href =
+                            baseUrl + "/payment?id=" + response.data.id;
+                    } else {
+                        var html =
+                            '<ul style="color: black;background: #ffb8b8;border-radius: 5px;padding: 5px 5px 5px 5px;">';
+                        $.each(response.message, function (i, item) {
+                            html += "<li>" + response.message[i] + "</li>";
+                        });
+                        html += "</ul>";
+                        swal({
+                            html: true,
+                            title: "Checkout Gagal!",
+                            text: html,
+                            type: "error",
+                        });
+                        hidePreload();
+                    }
+                },
+            });
+        } else {
+            swal("Gagal!", "Pilih metode pembayan terlebih dahulu!", "error");
+        }
+    });
+
+    $("#delete-cart").on("click", function () {
+        var id = $(this).data("id");
+        console.log(id);
         $.ajax({
-            url: baseUrl+"/checkout",
+            url: baseUrl + "/delete-cart",
             type: "POST",
-            dataType:"json",
-            accept: "text/html",
-            processData: false,
-            data: JSON.stringify(data),
-            success: function(response) {
-                console.log(response);
+            data: { id: id },
+            success: function (response) {
                 showPreload();
                 if (response.success) {
                     hidePreload();
-                    console.log(response.data);
-                    location.href = baseUrl+"/payment?id="+response.data.id;
+                    setTimeout(function () {
+                        swal(
+                            {
+                                title: "Selamat!",
+                                text: response.message,
+                                type: "success",
+                            },
+                            function () {
+                                window.location = "/cart";
+                            }
+                        );
+                    }, 1000);
                 } else {
-                    var html = '<ul style="color: black;background: #ffb8b8;border-radius: 5px;padding: 5px 5px 5px 5px;">'
-                    $.each(response.message, function(i, item) {
-                        html += '<li>'+response.message[i]+'</li>'
-                    })
-                    html += '</ul>';
-                    swal({ html:true, title: "Checkout Gagal!", text: html, type: "error",});
                     hidePreload();
+                    setTimeout(function () {
+                        swal(
+                            {
+                                title: "Gagal!",
+                                text: response.message,
+                                type: "error",
+                            },
+                            function () {
+                                location.href = window.location;
+                            }
+                        );
+                    }, 1000);
                 }
-            }
+            },
         });
     });
 
@@ -912,15 +981,15 @@
         Product
     --------------------------------------*/
 
-    $('.product-size a').on('click', function() {
+    $(".product-size a").on("click", function () {
         console.log($(this).text());
-        $(this).closest('.product-size').find('a').removeClass('active');
-        $(this).addClass('active');
-    })
+        $(this).closest(".product-size").find("a").removeClass("active");
+        $(this).addClass("active");
+    });
 
-    $('.product-variant a').on('click', function() {
+    $(".product-variant a").on("click", function () {
         console.log($(this).text());
-        $(this).closest('.product-variant').find('a').removeClass('active');
-        $(this).addClass('active');
-    })
+        $(this).closest(".product-variant").find("a").removeClass("active");
+        $(this).addClass("active");
+    });
 })(jQuery);

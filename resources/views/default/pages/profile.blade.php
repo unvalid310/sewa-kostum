@@ -85,21 +85,19 @@
                                                                 <td>INVOICE {{ $order->invoice }}</td>
                                                                 <td>{{ tanggal($order->order_date) }}</td>
                                                                 @if ($order->status == 1)
-                                                                    <td>Pesanan Belum selesai</td>
+                                                                    <td class="text-primary">Menunggu Pembayaran</td>
                                                                 @elseif($order->status == 2)
-                                                                    <td>Menunggu Pembayaran</td>
+                                                                    <td class="text-success">Sudah dibayar</td>
+                                                                @elseif ($order->status == 3)
+                                                                    <td class="text-danger">Pesanan Kadaluarsa</td>
                                                                 @else
-                                                                    <td>Selesai</td>
+                                                                    <td>Dibatalkan</td>
                                                                 @endif
                                                                 <td>{{ rupiah($order->total) }}</td>
-                                                                @if ($order->status != 3)
-                                                                    <td>
-                                                                        <a href="{{ '/payment?id=' . $order->id_transaction }}"
-                                                                            class="btn btn btn-dark btn-hover-primary btn-sm rounded-0">View</a>
-                                                                    </td>
-                                                                @else
-                                                                    <td></td>
-                                                                @endif
+                                                                <td>
+                                                                    <a href="{{ '/order?id=' . $order->id_transaction }}"
+                                                                        class="btn btn btn-dark btn-hover-primary btn-sm rounded-0">View</a>
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -112,44 +110,35 @@
                                     <!-- Single Tab Content Start -->
                                     <div class="tab-pane fade" id="account-info" role="tabpanel">
                                         <div class="myaccount-content">
-                                            <h3 class="title">Account Details</h3>
+                                            <h3 class="title">Detail Akun</h3>
                                             <div class="account-details-form">
                                                 <form action="#">
                                                     <div class="row">
-                                                        <div class="col-lg-6">
+                                                        <div class="col-lg-12">
                                                             <div class="single-input-item mb-3">
-                                                                <label for="first-name" class="required mb-1">First
-                                                                    Name</label>
-                                                                <input type="text" id="first-name"
-                                                                    placeholder="First Name" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="single-input-item mb-3">
-                                                                <label for="last-name" class="required mb-1">Last
-                                                                    Name</label>
-                                                                <input type="text" id="last-name"
-                                                                    placeholder="Last Name" />
+                                                                <label for="first-name" class="required mb-1">Nama</label>
+                                                                <input type="text" id="first-name" placeholder="Nama"
+                                                                    name="name" value="{{ $user->name }}" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="single-input-item mb-3">
-                                                        <label for="display-name" class="required mb-1">Display
-                                                            Name</label>
-                                                        <input type="text" id="display-name"
-                                                            placeholder="Display Name" />
+                                                        <label for="display-name" class="required mb-1">Email</label>
+                                                        <input type="email" id="display-name" placeholder="Email"
+                                                            name="email" value="{{ $user->email }}" readonly />
                                                     </div>
                                                     <div class="single-input-item mb-3">
-                                                        <label for="email" class="required mb-1">Email Addres</label>
-                                                        <input type="email" id="email" placeholder="Email Address" />
+                                                        <label for="email" class="required mb-1">No. Telp</label>
+                                                        <input type="text" id="email" placeholder="No. Telp"
+                                                            name="no_hp" value="{{ $user->no_hp }}" />
                                                     </div>
                                                     <fieldset>
-                                                        <legend>Password change</legend>
+                                                        <legend>Ubah password</legend>
                                                         <div class="single-input-item mb-3">
                                                             <label for="current-pwd" class="required mb-1">Current
                                                                 Password</label>
                                                             <input type="password" id="current-pwd"
-                                                                placeholder="Current Password" />
+                                                                placeholder="Current Password" name="password" />
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-lg-6">
@@ -157,15 +146,7 @@
                                                                     <label for="new-pwd" class="required mb-1">New
                                                                         Password</label>
                                                                     <input type="password" id="new-pwd"
-                                                                        placeholder="New Password" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <div class="single-input-item mb-3">
-                                                                    <label for="confirm-pwd" class="required mb-1">Confirm
-                                                                        Password</label>
-                                                                    <input type="password" id="confirm-pwd"
-                                                                        placeholder="Confirm Password" />
+                                                                        placeholder="New Password" name="new_password" />
                                                                 </div>
                                                             </div>
                                                         </div>

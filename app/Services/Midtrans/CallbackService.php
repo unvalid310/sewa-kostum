@@ -61,7 +61,7 @@ class CallbackService extends Midtrans
         $grossAmount = $this->order->total;
         $serverKey = $this->serverKey;
         $input = $orderId . $statusCode . $grossAmount . $serverKey;
-        $signature = openssl_digest($input, 'sha512');
+        $signature =  $this->notification->signature_key; //openssl_digest($input, 'sha512');
 
         return $signature;
     }
@@ -70,8 +70,8 @@ class CallbackService extends Midtrans
     {
         $notification = new Notification();
 
-        $orderNumber = $notification->id_transaction;
-        $order = Transaction::where('id_transaction', $orderNumber)->first();
+        $orderNumber = $notification->order_id;
+        $order = Transaction::where('invoice', $orderNumber)->first();
 
         $this->notification = $notification;
         $this->order = $order;

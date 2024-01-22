@@ -28,3 +28,12 @@ if (!function_exists('tanggal')) {
         return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
     }
 }
+
+if (!function_exists('tanggal_non_waktu')) {
+    # code...
+    function tanggal_non_waktu($tanggal) {
+        $date = explode(' ', $tanggal);
+        $pecahkan = explode('-', $date[0]);
+        return $pecahkan[0] . '-' . $pecahkan[1] . '-' . $pecahkan[2];
+    }
+}
