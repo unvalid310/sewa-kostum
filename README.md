@@ -1,64 +1,40 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Cara Install<br>
+1. resotre databse `app-sewa-kostum.sql`<br>
+2. `install composer` pada folder project<br>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Implementasi Midtrans
+1. buat akun midtrans https://dashboard.midtrans.com/register<br>
+2. login akun midtrans, pada halaman dashboard ubah `environment` menjadi `sandbox`<br>
+<img width="1512" alt="Screenshot 2024-01-22 at 02 11 58" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/9d4a06da-d6f8-4dd0-a3e8-8e83cd13c79a"><br>
+3. pilih manu `settings > access keys` dan copy semua `API Keys`<br>
+<img width="1512" alt="Screenshot 2024-01-22 at 02 14 25" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/ee72a434-65b3-4ea9-9519-a18ed98b3ac7"><br>
+4. buka file `.env` lalu masukan `API keys` midtrans<br> 
+<img width="769" alt="Screenshot 2024-01-22 at 02 05 21" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/1b78f4df-b950-4013-847f-f9576cd99568"><br>
 
-## About Laravel
+## Runing aplikasi
+1. buat akun dan install `ngrok`<br>
+2. konfigurasi file `ngrok.yml` <br>
+<img width="603" alt="Screenshot 2024-01-22 at 02 01 36" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/1ae9291d-5176-4b0a-b671-2e791cfc3fa6"><br>
+3. buka file `.env` ubah `APP_DEBUG` menjadi `false`<br>
+<img width="574" alt="Screenshot 2024-01-22 at 02 03 58" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/5526870e-8923-4446-a7cb-f315bf7fef45"><br>
+4. jalan kan aplikasi dengan cara `php artisan serve --port=8080` di terminal<br>
+<img width="545" alt="Screenshot 2024-01-22 at 02 08 14" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/d2abf4f3-130f-421b-990c-c240ccfa24b4"><br>
+6. kemudian jalankan ngrok dengan cara ketik `ngrok start dev` di terminal<br> 
+<img width="547" alt="Screenshot 2024-01-22 at 02 08 50" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/e592388c-5e01-4e28-9069-4c37a008b914"><br>
+7. copy alamat foward url ngrok<br>
+<img width="961" alt="Screenshot 2024-01-22 at 02 08 58" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/ae573524-6986-4661-8c11-c058a23d00ad"><br>
+8. masuk ke midtrans `environment > sandbox > settings > configration` paste-kan alamat tadi pada field `Payment notification url` lalu `save` configurasi<br>
+<img width="1512" alt="Screenshot 2024-01-22 at 02 15 46" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/bfbd93a1-6b2a-498c-828f-1d8e4327b49b"><br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+##simualsi pembayaran
+1. pilih metode pembayaran dan copy nomor pembayaran<br>
+![sewa-kostum_pilih-metode-pembayaran](https://github.com/unvalid310/sewa-kostum/assets/52092940/40481765-6f54-4816-914d-f61d7f6a4d94)<br>
+2. masuk https://simulator.sandbox.midtrans.com/openapi/va/index setelah itu pilih metdoe pembayaran sesuai dengan aplikasi dan paste-kan nomor pembayaran danl klik `inqure`<br>
+<img width="1512" alt="Screenshot 2024-01-22 at 09 37 57" src="https://github.com/unvalid310/sewa-kostum/assets/52092940/63b12ae4-f607-4e1c-98d8-ff0cfe5c77c0"><br>
+3. jika pemesanan benar maka akan muncul detail pembeli dan jumlah uang yang dibayarkan<br>
+![sewa-kostum_simulasi-pembayaran](https://github.com/unvalid310/sewa-kostum/assets/52092940/e093fed0-96e3-4633-93f5-77291e5387a5)<br>
+4. klik play maka sistem akan otomatis mengubah status pesanan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
