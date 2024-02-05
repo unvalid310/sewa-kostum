@@ -42,7 +42,7 @@ class AuthController extends Controller
             $request->session()->put($userData);
 
             if(Auth::user()->hasRole('customer')) {
-                return redirect()->intended('/');
+                return redirect()->to('/');
             } else {
                 return redirect()->to('/dashboard');
             }
