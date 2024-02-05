@@ -22,7 +22,7 @@
     </div>
     <!-- Breadcrumb Section End -->
 
-    @if (count($transaction) > 0)
+    @if ($transaction)
         <!-- Checkout Section Start -->
         <div class="section section-margin">
             <div class="container">
